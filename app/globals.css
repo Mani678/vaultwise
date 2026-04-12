@@ -746,3 +746,259 @@ body {
   text-align: center;
   line-height: 1.5;
 }
+
+/* ── Mobile + Safari Optimizations ── */
+
+/* Safari fix: gradient text fallback */
+@supports not (-webkit-background-clip: text) {
+  .hero__title {
+    background: none;
+    -webkit-text-fill-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+/* Safari fix: smooth scrolling */
+html {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Safari fix: button tap highlight */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safari fix: input zoom prevention (font-size must be >= 16px) */
+input[type="number"],
+input[type="text"],
+select {
+  font-size: 16px !important;
+}
+
+/* ── Tablet (768px) ── */
+@media (max-width: 768px) {
+  .app {
+    padding: 0 16px 60px;
+  }
+
+  .app__header {
+    padding: 16px 0 24px;
+    margin-bottom: 32px;
+  }
+
+  .brand-name { font-size: 16px; }
+  .brand-tag  { display: none; }
+
+  .hero { margin-bottom: 36px; }
+  .hero__title {
+    font-size: clamp(28px, 7vw, 44px);
+    letter-spacing: -1.5px;
+  }
+
+  .input-panel { padding: 20px; }
+
+  .vault-card { padding: 20px; }
+  .vault-card__apy { font-size: 38px; }
+
+  .deposit-panel { padding: 20px; }
+
+  .portfolio__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Mobile (480px) ── */
+@media (max-width: 480px) {
+  .app {
+    padding: 0 12px 60px;
+  }
+
+  .app__header {
+    padding: 14px 0 20px;
+    margin-bottom: 24px;
+  }
+
+  .hero { margin-bottom: 28px; }
+  .hero__title {
+    font-size: clamp(26px, 8vw, 36px);
+    letter-spacing: -1px;
+  }
+  .hero__sub { font-size: 14px; }
+
+  .risk-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .risk-option {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px 14px;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .risk-option__desc { display: none; }
+
+  .input-panel { padding: 16px; }
+
+  .vault-card { padding: 16px; }
+  .vault-card__apy { font-size: 32px; }
+  .vault-card__meta { flex-wrap: wrap; gap: 12px; }
+
+  .deposit-panel { padding: 16px; }
+  .deposit-panel__input { font-size: 16px; }
+
+  .btn--large {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .section__title { font-size: 18px; }
+
+  .wallet-address { font-size: 11px; }
+
+  .position-card { padding: 16px; }
+  .position-card__balance { font-size: 22px; }
+
+  .app__footer { margin-top: 40px; }
+}
+
+/* ── Very small screens (360px) ── */
+@media (max-width: 360px) {
+  .hero__title { font-size: 24px; }
+  .brand-name  { font-size: 14px; }
+
+  .wallet-connected { gap: 6px; }
+  .wallet-address   { display: none; }
+}
+
+/* ── Rebalance Alert ── */
+.rebalance-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: linear-gradient(135deg, #0a1a0a, #0a2010);
+  border: 1px solid var(--green);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 24px;
+  animation: slideIn 0.4s ease;
+  box-shadow: 0 0 24px rgba(0, 229, 160, 0.08);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.rebalance-alert__icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rebalance-alert__content { flex: 1; }
+
+.rebalance-alert__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.rebalance-alert__body {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.rebalance-alert__body strong {
+  color: var(--text);
+}
+
+.rebalance-alert__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .rebalance-alert {
+    flex-direction: column;
+  }
+  .rebalance-alert__actions {
+    flex-direction: row;
+  }
+}
+
+/* ── Token Grid ── */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.token-option {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text);
+}
+
+.token-option:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-card-hover);
+}
+
+.token-option--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+.token-option__icon {
+  font-size: 22px;
+  margin-bottom: 2px;
+}
+
+.token-option__symbol {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.token-option__name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.token-option--active .token-option__name {
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .token-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .token-option { padding: 10px 6px; }
+  .token-option__name { display: none; }
+}

@@ -16,7 +16,7 @@ export type TxStatus =
   | "success"
   | "error";
 
-export function DepositPanel({ vault }: { vault: Vault }) {
+export function DepositPanel({ vault, onDepositSuccess }: { vault: Vault; onDepositSuccess?: () => void }) {
   const { address, isConnected, chainId } = useAccount();
   const { data: walletClient } = useWalletClient();
   const { switchChainAsync } = useSwitchChain();
@@ -99,6 +99,7 @@ export function DepositPanel({ vault }: { vault: Vault }) {
             setStatus("pending");
           } else if (stepSt === "DONE") {
             setStatus("success");
+            onDepositSuccess?.();
           }
 
           const withHash = procs.find((p: { txHash?: string }) => p.txHash);
@@ -114,6 +115,7 @@ export function DepositPanel({ vault }: { vault: Vault }) {
 
       if (finalStatus === "DONE") {
         setStatus("success");
+        onDepositSuccess?.();
       } else if (finalStatus === "FAILED") {
         const reason = failedProcess?.error?.message ?? "Unknown reason";
         throw new Error(`Deposit failed: ${reason}`);

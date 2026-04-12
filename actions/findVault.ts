@@ -1,27 +1,19 @@
 "use server";
 // actions/findVault.ts
-// Server action: calls LI.FI Earn API + runs selection strategy
 
-import { fetchUSDCVaults } from "@/lib/lifi";
+import { fetchVaults, type SupportedToken } from "@/lib/lifi";
 import { selectBestVault, type RiskLevel, type SelectionResult } from "@/lib/strategy";
 
-export interface FindVaultResult {
-  success: true;
-  data: SelectionResult;
-}
-
-export interface FindVaultError {
-  success: false;
-  error: string;
-}
-
+export interface FindVaultResult  { success: true;  data: SelectionResult; }
+export interface FindVaultError   { success: false; error: string; }
 export type FindVaultResponse = FindVaultResult | FindVaultError;
 
 export async function findBestVault(
-  risk: RiskLevel
+  risk: RiskLevel,
+  token: SupportedToken = "USDC"
 ): Promise<FindVaultResponse> {
   try {
-    const vaults = await fetchUSDCVaults();
+    const vaults = await fetchVaults(token);
     const result = selectBestVault(vaults, risk);
     return { success: true, data: result };
   } catch (err: unknown) {
