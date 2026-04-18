@@ -78,7 +78,7 @@ const COMPOSER_SUPPORTED_PROTOCOLS = [
   "morpho", "aave", "euler", "seamless", "moonwell",
 ];
 
-const EARN_BASE = "https://earn.li.fi/v1/earn";
+const EARN_BASE = "https://earn.li.fi/v1";
 const TARGET_CHAIN_IDS = [1, 137, 42161, 10, 8453];
 
 const CHAIN_NAMES: Record<number, string> = {
@@ -97,7 +97,10 @@ export async function fetchVaults(token: SupportedToken = "USDC"): Promise<Vault
       try {
         const url = `${EARN_BASE}/vaults?chainId=${chainId}&asset=${token}&sortBy=apy&limit=20`;
         const res = await fetch(url, {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "x-lifi-api-key": process.env.LIFI_API_KEY ?? "",
+          },
           next: { revalidate: 60 },
         });
         if (!res.ok) return;
