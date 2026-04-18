@@ -90,12 +90,14 @@ const CHAIN_NAMES: Record<number, string> = {
 const PREFERRED_CHAIN_IDS = [8453, 42161, 10];
 
 export async function fetchVaults(token: SupportedToken = "USDC"): Promise<Vault[]> {
+  // LI.FI Earn API uses WETH for ETH vault queries
+  const apiToken = token === "ETH" ? "WETH" : token;
   const allVaults: Vault[] = [];
 
   await Promise.all(
     TARGET_CHAIN_IDS.map(async (chainId) => {
       try {
-        const url = `${EARN_BASE}/vaults?chainId=${chainId}&asset=${token}&sortBy=apy&limit=20`;
+        const url = `${EARN_BASE}/vaults?chainId=${chainId}&asset=${apiToken}&sortBy=apy&limit=20`;
         const res = await fetch(url, {
           headers: {
             "Content-Type": "application/json",
